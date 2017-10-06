@@ -47,6 +47,11 @@ def game_quiet(white_engine, black_engine, game_time=300.0, verbose=False):
 
 if __name__ == '__main__':
 
+    if len(sys.argv) == 1:
+        NUM_GAMES = 100
+    else: 
+        NUM_GAMES = int(sys.argv[1])
+        
     white_engine = "student"
     black_engine = "random2"
     engines_b = __import__('engines.' + black_engine)
@@ -71,7 +76,7 @@ if __name__ == '__main__':
         return 0
 
     p = multiprocessing.Pool( multiprocessing.cpu_count() )
-    outcome = p.map(f, range(100))
+    outcome = p.map(f, range(NUM_GAMES))
 
     print sum(outcome)/float(len(outcome))
  
