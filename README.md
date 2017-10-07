@@ -1,7 +1,7 @@
 # quick-eval
 
 ## installation:
-Add the file to the top leve ldirectory of Homework2 (at the same level as othello.py)
+Add the file to the top level directory of Homework2 (at the same level as othello.py)
 
 ## usage:
 
@@ -10,3 +10,6 @@ Add the file to the top leve ldirectory of Homework2 (at the same level as othel
 
 `python eval.py`
 (defaults to playing 100 games)
+
+`python eval.py -ab 10`
+(to use alpha beta pruning)

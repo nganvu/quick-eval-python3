@@ -2,6 +2,7 @@ from engines import random1, random2, random3, student
 import othello
 from othello import *
 import multiprocessing
+from collections import Counter
 
 def game_quiet(white_engine, black_engine, game_time=300.0, verbose=False):
     """ Run a single game. Raise RuntimeError in the event of time expiration.
@@ -47,11 +48,18 @@ def game_quiet(white_engine, black_engine, game_time=300.0, verbose=False):
 
 if __name__ == '__main__':
 
+    alpha_beta_flag = False
     if len(sys.argv) == 1:
         NUM_GAMES = 100
-    else: 
+    elif len(sys.argv) == 2: 
         NUM_GAMES = int(sys.argv[1])
-        
+    elif len(sys.argv) == 3:
+        for arg in sys.argv:
+            try:
+                NUM_GAMES = int(arg)
+            except:
+                alpha_beta_flag = True if str(arg) == "-ab" else False
+
     white_engine = "student"
     black_engine = "random2"
     engines_b = __import__('engines.' + black_engine)
@@ -63,6 +71,8 @@ if __name__ == '__main__':
     # engine_b.alpha_beta = False
     othello.player[-1] = black_engine + " (black)"
     othello.player[1] = white_engine + " (white)"
+
+    engine_w.alpha_beta = alpha_beta_flag
     
     # print black_engine + " vs. " + white_engine + "\n"
     print "using %d cpus" % multiprocessing.cpu_count()
@@ -72,12 +82,15 @@ if __name__ == '__main__':
         stats = othello.winner(board)
         print stats
         if stats[0] == 1:
-            return 1
-        return 0
+            return "win"
+        elif stats[0] == 0:
+            return "tie"
+        return "loss"
 
     p = multiprocessing.Pool( multiprocessing.cpu_count() )
     outcome = p.map(f, range(NUM_GAMES))
 
-    print sum(outcome)/float(len(outcome))
+    counts = Counter(outcome)
+    
+    print counts.items()
  
-    # othello.main(random1, student, game_time=30, verbose=True)
