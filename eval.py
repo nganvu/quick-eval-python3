@@ -15,7 +15,7 @@ def game_quiet(white_engine, black_engine, game_time=300.0, verbose=False):
     engine = { -1 : black_engine, 1 : white_engine }
 
     if verbose:
-        print "INITIAL BOARD\n--\n"
+        print("INITIAL BOARD\n--\n")
         board.display(time)
     
     # Do rounds
@@ -37,8 +37,8 @@ def game_quiet(white_engine, black_engine, game_time=300.0, verbose=False):
                 moves.append(move)
 
                 if verbose:
-                    print "--\n"
-                    print "Round " + str(move_num + 1) + ": " + player[color] + " plays in " + move_string(move) + '\n'
+                    print("--\n")
+                    print("Round " + str(move_num + 1) + ": " + player[color] + " plays in " + move_string(move) + '\n')
                     board.display(time)
 
         if not moves:
@@ -74,13 +74,12 @@ if __name__ == '__main__':
 
     engine_w.alpha_beta = alpha_beta_flag
     
-    # print black_engine + " vs. " + white_engine + "\n"
-    print "using %d cpus" % multiprocessing.cpu_count()
+    print("using %d cpus" % multiprocessing.cpu_count())
 
     def f(x):
         board = game_quiet(engine_w, engine_b, 60, verbose = False)
         stats = othello.winner(board)
-        print stats
+        print(stats)
         if stats[0] == 1:
             return "win"
         elif stats[0] == 0:
@@ -92,5 +91,5 @@ if __name__ == '__main__':
 
     counts = Counter(outcome)
     
-    print counts.items()
+    print(counts.items())
  
